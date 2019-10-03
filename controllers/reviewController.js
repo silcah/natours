@@ -1,10 +1,5 @@
 const Review = require('./../models/reviewModel');
-//const catchAsync = require('./../utils/catchAsync');
 const factory = require('./handlerFactory');
-//const APIFeatures = require('./../utils/apiFeatures');
-//const AppError = require('./../utils/appError');
-
-exports.getAllReviews = factory.getAll(Review);
 
 exports.setTourUserIds = (req, res, next) => {
   // Allow nested routes
@@ -12,6 +7,8 @@ exports.setTourUserIds = (req, res, next) => {
   if (!req.body.user) req.body.user = req.user.id;
   next();
 };
+
+exports.getAllReviews = factory.getAll(Review);
 
 exports.getReview = factory.getOne(Review);
 

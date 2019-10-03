@@ -4,33 +4,6 @@ const Tour = require('./../models/tourModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const factory = require('./handlerFactory');
-/*
-const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
-);
-*/
-
-//Param middleware to check if ID is valid
-//Only gets execute if the route has /:id
-/*exports.checkId = (req, res, next, val) => {
-  if (val > tours.length) {
-    //if (req.params.id * 1 > tours.length) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Invalid ID'
-    });
-  }
-  next();
-};
-exports.checkBody = (req, res, next) => {
-  if (!req.body.name || !req.body.price) {
-    return res.status(400).json({
-      status: 'fail',
-      message: 'The tour has to contain name and price'
-    });
-  }
-  next();
-};*/
 
 const multerStorage = multer.memoryStorage();
 
@@ -59,7 +32,7 @@ exports.uploadTourImages = upload.fields([
 ]);
 
 exports.resizeTourImages = catchAsync(async (req, res, next) => {
-  console.log(req.files);
+  // console.log(req.files);
   if (!req.files.imageCover || !req.files.images) return next();
 
   // 1) Proccessing cover image
@@ -106,18 +79,6 @@ exports.createTour = factory.createOne(Tour);
 exports.updateTour = factory.updateOne(Tour);
 
 exports.deleteTour = factory.deleteOne(Tour);
-/* exports.deleteTour = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findByIdAndDelete(req.params.id);
-
-  if (!tour) {
-    return next(new AppError('No tour found with that ID', 404));
-  }
-
-  res.status(204).json({
-    status: 'success',
-    data: null
-  });
-}); */
 
 //Agregation Pipeline
 exports.getTourStats = catchAsync(async (req, res, next) => {

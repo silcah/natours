@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
-//const validator = require('validator');
 
 //CREATE THE SCHEMA
 const tourSchema = new mongoose.Schema(
@@ -168,11 +167,11 @@ tourSchema.pre(/^find/, function(next) {
   next();
 });
 
-tourSchema.post(/^find/, function(docs, next) {
-  console.log(`Query took ${Date.now() - this.start} milliseconds!`);
-  //console.log(docs);
-  next();
-});
+// tourSchema.post(/^find/, function(docs, next) {
+//   console.log(`Query took ${Date.now() - this.start} milliseconds!`);
+//   console.log(docs);
+//   next();
+// });
 
 // AGREGATION MIDDLEWARE
 /*
@@ -186,18 +185,3 @@ tourSchema.pre('aggregate', function(next) {
 const Tour = mongoose.model('Tour', tourSchema);
 
 module.exports = Tour;
-/*
-//CREATE NEW DOCUMENT OF TOUR
-const testTour = new Tour({
-  name: 'The Park Camper',
-  price: 997
-});
-
-//SAVE IT TO THE DATABASE
-testTour
-  .save()
-  .then(doc => {
-    console.log(doc);
-  })
-  .catch(err => console.log(err));
-*/

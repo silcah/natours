@@ -7,6 +7,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const compression = require('compresion');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -68,6 +69,9 @@ app.use(
   })
 );
 
+// Compress all the text that is send to client
+app.use(compression());
+
 //Test middleware
 //Create own midleware function, applies to every single request because the is no route before
 app.use((req, res, next) => {
@@ -85,33 +89,9 @@ app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/bookings', bookingRouter);
 
 app.all('*', (req, res, next) => {
-  /*
-  const err = new Error(`Can't find ${req.originalUrl} on this server`);
-  err.status = 'fail';
-  err.statusCode = 404;*/
-
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
 });
 
 app.use(globalErrorHandler);
 
 module.exports = app;
-
-/*
-app.get('/api/v1/tours', getAllTours);
-app.get('/api/v1/tours/:id', getTour);
-app.post('/api/v1/tours', createTour);
-//Update tour (using patch because can updated only some properties)
-app.patch('/api/v1/tours/:id', updateTour);
-app.delete('/api/v1/tours/:id', deleteTour);
-*/
-
-/*
-app
-  .route('/api/v1/tours')
-  .get(getAllTours)
-  .post(createTour);
-app
-  .route('/api/v1/tours/:id')
-  .get(getTour)
-*/

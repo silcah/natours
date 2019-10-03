@@ -107,6 +107,3 @@ reviewSchema.post(/^findOneAnd/, async function(next) {
 const Review = mongoose.model('Review', reviewSchema);
 
 module.exports = Review;
-
-// POST /tour/23232/reviews
-// GET /tour/23232/reviews
